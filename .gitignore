@@ -1,0 +1,31 @@
+# Archivos y carpetas generados por Maven
+target/
+*.jar
+*.war
+*.ear
+
+# Archivos de log
+*.log
+logs/
+
+# Archivos y carpetas del IDE
+.idea/
+.vscode/
+*.iml
+*.project
+*.classpath
+*.settings/
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Variables de entorno locales (si las tuvieras en un archivo)
+.env
+
+# Archivos de compilación de Java (si los hubiera fuera de target)
+bin/
+out/
+
+# Comentarios de Docker (si no quieres subirlos, aunque a veces son útiles)
+# docker-compose.override.yml
