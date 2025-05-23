@@ -42,14 +42,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt;
         final String username;
 
-        // LOG AÑADIDO
         logger.debug(
             "Procesando request para URI: {}",
             request.getRequestURI()
         );
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            // LOG MODIFICADO/AÑADIDO
             logger.warn(
                 "No hay cabecera Authorization con Bearer token para URI: {}. Dejando pasar.",
                 request.getRequestURI()
@@ -61,14 +59,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         jwt = authHeader.substring(7);
         try {
             username = jwtUtil.extractUsername(jwt);
-            // LOG AÑADIDO
             logger.info(
                 "Username extraído del token: {} para URI: {}",
                 username,
                 request.getRequestURI()
             );
         } catch (Exception e) {
-            // LOG AÑADIDO
             logger.error(
                 "Error al extraer username del token JWT: {}. Token: {}",
                 e.getMessage(),
@@ -82,7 +78,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             username != null &&
             SecurityContextHolder.getContext().getAuthentication() == null
         ) {
-            // LOG AÑADIDO
             logger.info(
                 "SecurityContext es null, cargando UserDetails para {}",
                 username
@@ -103,12 +98,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     username,
                     e.getMessage()
                 );
-                filterChain.doFilter(request, response); // Importante si no se puede cargar el usuario
+                filterChain.doFilter(request, response);
                 return;
             }
 
             if (jwtUtil.validateToken(jwt, userDetails)) {
-                // LOG AÑADIDO
                 logger.info(
                     "Token válido para {}. Estableciendo autenticación.",
                     username
@@ -124,11 +118,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 );
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             } else {
-                // LOG AÑADIDO
                 logger.warn("Token inválido para {}.", username);
             }
         } else {
-            // LOG AÑADIDO
             logger.info(
                 "Username es null o SecurityContext ya tiene autenticación. Username: {}, Auth: {}",
                 username,

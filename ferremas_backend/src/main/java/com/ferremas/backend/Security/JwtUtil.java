@@ -10,8 +10,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-import org.slf4j.Logger; // Asegúrate de importar Logger
-import org.slf4j.LoggerFactory; // Asegúrate de importar LoggerFactory
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory; 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class); // AÑADE ESTO
+    private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
     @Value("${jwt.secret}")
     private String secretKey;
@@ -53,7 +53,6 @@ public class JwtUtil {
 
     private Boolean isTokenExpired(String token) {
         Date expiration = extractExpiration(token);
-        // LOG AÑADIDO
         logger.info(
             "Token expira en: " + expiration + ", Hora actual: " + new Date()
         );
@@ -62,7 +61,6 @@ public class JwtUtil {
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        // LOG AÑADIDO
         logger.info(
             "Generando token para usuario: {}",
             userDetails.getUsername()
@@ -82,7 +80,6 @@ public class JwtUtil {
 
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
-        // LOGS AÑADIDOS
         logger.info(
             "Validando token para usuario del token: {}, UserDetails username: {}",
             username,
