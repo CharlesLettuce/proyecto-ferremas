@@ -21,5 +21,5 @@ Proyecto de backend para la gestión de productos, usuarios y operaciones de **F
 
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/tu-org/proyecto-ferremas-backend.git
+   git clone https://github.com/CharlesLettuce/proyecto-ferremas-backend.git
    cd proyecto-ferremas-backend
