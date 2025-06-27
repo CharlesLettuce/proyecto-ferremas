@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ferremas – API Tester</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  </head>
+  <body class="bg-light">
+    <div class="container py-4">
+      <h1 class="mb-3">Ferremas API Tester</h1>
+
+      <ul class="nav nav-pills mb-3" id="tabs">
+        <li class="nav-item"><button class="nav-link active" data-bs-target="#auth" data-bs-toggle="pill">Auth</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-target="#clientes" data-bs-toggle="pill">Clientes</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-target="#proveedores" data-bs-toggle="pill">Proveedores</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-target="#productos" data-bs-toggle="pill">Productos</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-target="#ventas" data-bs-toggle="pill">Ventas</button></li>
+      </ul>
+
+      <div class="tab-content border rounded bg-white p-4">
+        <!-- AUTH -->
+        <div class="tab-pane fade show active" id="auth">
+          <h4>Registro</h4>
+          <form id="form-cliente-register" class="row gy-2">
+            <div class="col-md-4"><input class="form-control" placeholder="usuario" name="username" required /></div>
+            <div class="col-md-4"><input class="form-control" type="password" placeholder="contraseña" name="password" required /></div>
+            <div class="col-md-4 d-grid"><button class="btn btn-outline-primary" type="submit">Registrar</button></div>
+          </form>
+          <hr />
+          <h4>Login</h4>
+          <form id="form-login" class="row gy-2">
+            <div class="col-md-4"><input class="form-control" placeholder="usuario" name="username" required /></div>
+            <div class="col-md-4"><input class="form-control" type="password" placeholder="contraseña" name="password" required /></div>
+            <div class="col-md-4 d-grid"><button class="btn btn-primary" type="submit">Login</button></div>
+          </form>
+          <div class="mt-3">Token:&nbsp;<code id="token-preview">—</code></div>
+        </div>
+        <!-- CLIENTES -->
+        <div class="tab-pane fade" id="clientes">
+          <h4>Crear / actualizar cliente</h4>
+          <form id="form-cliente" class="row gy-2">
+            <input type="hidden" name="id" />
+            <div class="col-md-4"><input class="form-control" placeholder="Nombre" name="nombre" required /></div>
+            <div class="col-md-4"><input class="form-control" placeholder="Email" name="email" /></div>
+            <div class="col-md-4"><input class="form-control" placeholder="Teléfono" name="telefono" /></div>
+            <div class="col-12 d-grid mt-2"><button class="btn btn-success" type="submit">Guardar</button></div>
+          </form>
+          <button class="btn btn-outline-secondary mt-3" onclick="listar('clientes')">Listar</button>
+          <pre class="bg-body-secondary p-2 mt-2" id="out-clientes"></pre>
+        </div>
+        <!-- PROVEEDORES -->
+        <div class="tab-pane fade" id="proveedores">
+          <h4>Crear / actualizar proveedor</h4>
+          <form id="form-proveedor" class="row gy-2">
+            <input type="hidden" name="id" />
+            <div class="col-md-3"><input class="form-control" placeholder="Nombre" name="nombre" required /></div>
+            <div class="col-md-3"><input class="form-control" placeholder="Contacto" name="contacto" /></div>
+            <div class="col-md-3"><input class="form-control" placeholder="Email" name="email" /></div>
+            <div class="col-md-3"><input class="form-control" placeholder="Teléfono" name="telefono" /></div>
+            <div class="col-12 d-grid mt-2"><button class="btn btn-success" type="submit">Guardar</button></div>
+          </form>
+          <button class="btn btn-outline-secondary mt-3" onclick="listar('proveedores')">Listar</button>
+          <pre class="bg-body-secondary p-2 mt-2" id="out-proveedores"></pre>
+        </div>
+        <!-- PRODUCTOS -->
+        <div class="tab-pane fade" id="productos">
+          <h4>Crear / actualizar producto</h4>
+          <form id="form-producto" class="row gy-2">
+            <input type="hidden" name="id" />
+            <div class="col-md-3"><input class="form-control" placeholder="SKU" name="codigoSku" required /></div>
+            <div class="col-md-3"><input class="form-control" placeholder="Nombre" name="nombre" required /></div>
+            <div class="col-md-3"><input class="form-control" placeholder="Precio" name="precioUnitario" type="number" step="0.01" required /></div>
+            <div class="col-md-3"><input class="form-control" placeholder="Stock" name="stock" type="number" required /></div>
+            <div class="col-12"><textarea class="form-control" name="descripcion" placeholder="Descripción"></textarea></div>
+            <div class="col-12 d-grid mt-2"><button class="btn btn-success" type="submit">Guardar</button></div>
+          </form>
+          <button class="btn btn-outline-secondary mt-3" onclick="listar('productos')">Listar</button>
+          <pre class="bg-body-secondary p-2 mt-2" id="out-productos"></pre>
+        </div>
+        <!-- VENTAS -->
+        <div class="tab-pane fade" id="ventas">
+          <h4>Crear venta</h4>
+          <form id="form-venta" class="row gy-2">
+            <div class="col-md-4"><input class="form-control" placeholder="Total" name="total" type="number" step="0.01" required /></div>
+            <div class="col-md-4"><input class="form-control" placeholder="Cliente ID" name="clienteId" type="number" required /></div>
+            <div class="col-md-4 d-grid"><button class="btn btn-success" type="submit">Guardar</button></div>
+          </form>
+          <button class="btn btn-outline-secondary mt-3" onclick="listar('ventas')">Listar</button>
+          <pre class="bg-body-secondary p-2 mt-2" id="out-ventas"></pre>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const BASE = "http://localhost:8080/api";
+      const tokenKey = "ferremas_jwt";
+
+      const getToken = () => localStorage.getItem(tokenKey) || "";
+      const setToken = (t) => {
+        localStorage.setItem(tokenKey, t);
+        document.getElementById("token-preview").textContent = t ? t.slice(0, 25) + "…" : "—";
+      };
+      setToken(getToken());
+
+      async function api(url, method = "GET", body) {
+        const opts = {
+          method,
+          headers: { Authorization: `Bearer ${getToken()}` },
+        };
+        if (body) {
+          opts.headers["Content-Type"] = "application/json";
+          opts.body = JSON.stringify(body);
+        }
+        const res = await fetch(`${BASE}${url}`, opts);
+        if (!res.ok) throw new Error(`${res.status}: ${res.statusText}`);
+        return res.status !== 204 ? res.json() : {};
+      }
+
+      // ---------- AUTH ----------
+      document.getElementById("form-cliente-register").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(e.target));
+        try {
+          await api("/auth/register", "POST", data);
+          alert("Registro exitoso");
+        } catch (err) {
+          alert(err);
+        }
+      });
+
+      document.getElementById("form-login").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(e.target));
+        try {
+          const { token } = await api("/auth/login", "POST", data);
+          setToken(token);
+          alert("Login OK");
+        } catch (err) {
+          alert(err);
+        }
+      });
+
+      // ---------- CRUD GENERICO ----------
+      function setupForm(entity, endpoint) {
+        const form = document.getElementById(`form-${entity}`);
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const obj = Object.fromEntries(new FormData(form));
+          const id = obj.id || "";
+          delete obj.id;
+          if (entity === "venta") {
+            obj.total = Number(obj.total);
+            obj.cliente = { id: Number(obj.clienteId) };
+            delete obj.clienteId;
+          }
+          try {
+            await api(`/${endpoint}${id ? "/" + id : ""}`, id ? "PUT" : "POST", obj);
+            form.reset();
+            listar(endpoint);
+          } catch (err) {
+            alert(err);
+          }
+        });
+      }
+
+      function listar(endpoint) {
+        api(`/${endpoint}`).then((data) => {
+          document.getElementById(`out-${endpoint}`).textContent = JSON.stringify(data, null, 2);
+        }).catch(alert);
+      }
+
+      setupForm("cliente", "clientes");
+      setupForm("proveedor", "proveedores");
+      setupForm("producto", "productos");
+      setupForm("venta", "ventas");
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
